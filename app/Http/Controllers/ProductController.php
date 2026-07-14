@@ -72,18 +72,28 @@ class ProductController extends Controller
 
     public function order()
     {
-        $carts = session()->get('cart');
-        foreach ($carts as $id => $cart) {
+        $carts = session()->get('cart', []);
+
+        if (empty($carts)) {
+            return redirect()->back()->with('error', 'Your cart is empty.');
+        }
+
+        foreach ($carts as $productId => $cart) {
+            $subtotal = $cart['quantity'] * $cart['price'];
+
             DB::table('orders')->insert([
-                'product_id' => $cart['id'],
+                'product_id' => $productId,
                 'product_name' => $cart['name'],
                 'product_quantity' => $cart['quantity'],
                 'product_price' => $cart['price'],
-                'sub_total' => $cart['quantity'] * $cart['price']
+                'sub_total' => $subtotal,
+                'total' => $subtotal,
             ]);
         }
-        return view('orderDone');
 
+        session()->forget('cart');
+
+        return view('orderDone');
     }
 
 }
