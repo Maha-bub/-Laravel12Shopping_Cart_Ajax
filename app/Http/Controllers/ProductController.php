@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -61,6 +62,27 @@ class ProductController extends Controller
             }
             session()->flash('success', 'Product removed successfully');
         }
+
+    }
+
+    public function chekout()
+    {
+        return view('checkout');
+    }
+
+    public function order()
+    {
+        $carts = session()->get('cart');
+        foreach ($carts as $id => $cart) {
+            DB::table('orders')->insert([
+                'product_id' => $cart['id'],
+                'product_name' => $cart['name'],
+                'product_quantity' => $cart['quantity'],
+                'product_price' => $cart['price'],
+                'sub_total' => $cart['quantity'] * $cart['price']
+            ]);
+        }
+        return view('orderDone');
 
     }
 

@@ -14,3 +14,5 @@ Route::get('cart', [ProductController::class, 'cart'])->name('cart');
 Route::get('add-to-cart/{id}', [ProductController::class, 'addToCart'])->name('add.to.cart');
 Route::patch('update-cart', [ProductController::class, 'update'])->name('update.cart');
 Route::delete('remove-from-cart', [ProductController::class, 'remove'])->name('remove.from.cart');
+Route::get('checkout', [ProductController::class, 'checkout'])->name('checkout');
+Route::get('order', [ProductController::class, 'order'])->name('order');

@@ -43,7 +43,7 @@
                         </td>
                         <td data-th="Subtotal" class="text-center">${{ $details['price'] * $details['quantity'] }}</td>
                         <td class="actions" data-th="">
-                            <button class="btn btn-danger btn-sm remove-from-cart"><i class="fa fa-trash-o"></i></button>
+                            <button class="btn btn-danger btn-sm remove-from-cart"><i class="fa fa-trash-o"> Delete</i></button>
                         </td>
                     </tr>
                 @endforeach
@@ -61,7 +61,7 @@
                 <td colspan="5" class="text-right">
                     <a href="{{ url('/') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue
                         Shopping</a>
-                    <button class="btn btn-success">Checkout</button>
+                    <a class="btn btn-success" href="{{ route('order') }}">Checkout</a>
                 </td>
             </tr>
         </tfoot>
@@ -94,6 +94,7 @@
             e.preventDefault();
             var ele = $(this);
             if (confirm("Are you sure want to remove?")) {
+
                 $.ajax({
                     url: '{{ route('remove.from.cart') }}',
                     method: "DELETE",
