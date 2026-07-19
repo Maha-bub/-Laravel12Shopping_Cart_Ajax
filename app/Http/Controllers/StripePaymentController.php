@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+
+       
 use Illuminate\Http\Request;
 use Stripe;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
-
+       
 class StripePaymentController extends Controller
 {
     /**
@@ -18,7 +20,7 @@ class StripePaymentController extends Controller
     {
         return view('stripe');
     }
-
+      
     /**
      * success response method.
      *
@@ -27,15 +29,15 @@ class StripePaymentController extends Controller
     public function stripePost(Request $request): RedirectResponse
     {
         Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
-
-        Stripe\Charge::create([
-            "amount" => 10 * 100,
-            "currency" => "usd",
-            "source" => $request->stripeToken,
-            "description" => "Test payment from itsolutionstuff.com."
+      
+        Stripe\Charge::create ([
+                "amount" => 10 * 100,
+                "currency" => "usd",
+                "source" => $request->stripeToken,
+                "description" => "Test payment from itsolutionstuff.com." 
         ]);
-
+                
         return back()
-            ->with('success', 'Payment successful!');
+                ->with('success', 'Payment successful!');
     }
 }
